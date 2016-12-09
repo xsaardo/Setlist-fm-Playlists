@@ -1,6 +1,6 @@
 <html>
 	<head>
-		 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		
 		<script src="script.js"></script>
 		<script src="search.js"></script>
@@ -8,13 +8,20 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		
+		<style>
+			.scrollable-menu {
+				height: auto;
+				max-height: 200px;
+				overflow-x: hidden
+			}
+		</style>
 	</head>
-	<body background ="img/music.jpg">
+	<body>
 		<h3>Show most played songs from recent setlists</h3>
 		<h4>Search for an artist: </h4><input id="artist" type="text">
 		<div class="dropdown">
-			<button onclick="search2()" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">GO!</button>
-				<ul class="dropdown-menu" id="artistOptions">
+			<button onclick="search()" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">GO!</button>
+				<ul class="dropdown-menu scrollable-menu" id="artistOptions">
 				</ul>
 		</div>	
 		
