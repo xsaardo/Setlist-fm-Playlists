@@ -2,29 +2,42 @@
 	<head>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		
-		<script src="script.js"></script>
-		<script src="search.js"></script>
-		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		
 		<style>
+			p {
+				text-align: center
+			} 
 			.scrollable-menu {
 				height: auto;
-				max-height: 200px;
-				overflow-x: hidden
+				max-height: 400px;
+				overflow-x: hidden;
+				width: 400px
+			}
+			.input-group{
+				width: 400px;
+				margin: 0 auto;
 			}
 		</style>
 	</head>
 	<body>
-		<h3>Show most played songs from recent setlists</h3>
-		<h4>Search for an artist: </h4><input id="artist" type="text">
-		<div class="dropdown">
-			<button onclick="search()" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">GO!</button>
-				<ul class="dropdown-menu scrollable-menu" id="artistOptions">
-				</ul>
-		</div>	
+		<div class="jumbotron text-center">
+			<h3>Show most played songs from recent setlists</h3>
+				<div class="form-group" id="formParent">
+					<div class="input-group">
+					  <input type="text" class="form-control" placeholder="Artist Name" aria-describedby="basic-addon2" id="artist">
+						  <span class="input-group-btn">
+							<button class="btn btn-success dropdown-toggle" data-toggle="dropdown" type="button" onclick="search()" id="buttonDrop">Search</button>
+							<div class="dropdown-menu dropdown-menu-right scrollable-menu">
+							  <ul id="artistOptions" style="list-style: none"></ul>
+							</div>
+						  </span>	  
+					</div>
+				</div>
+		</div>
 		
 		<p id="songs"></p>
 	</body>
+	<script src="search.js"></script>
 </html>
