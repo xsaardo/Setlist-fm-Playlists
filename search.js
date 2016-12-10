@@ -1,10 +1,21 @@
 var artistName;
 var songList = {};
 
+var inputForm = document.getElementById("artist");
+inputForm.addEventListener("keydown", function (e) {
+    if (e.keyCode === 13) {  //checks whether the pressed key is "Enter"
+		search();
+		e.preventDefault();
+		$(".dropdown-toggle").dropdown("toggle");
+    }
+});
+
 // Searches setlist.fm for specified artist and updates dropdown with list of artists
 search = function() {
+	console.log("HI");
+	
 	artistName = document.getElementById("artist").value;
-	 
+
 	var artist;
 	var selectedID;
 	 
@@ -13,7 +24,17 @@ search = function() {
 	songList = {};
 	 
 	// Perform setlist.fm artist search
-	$.getJSON("http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%27https%3A%2F%2Fapi.setlist.fm%2Frest%2F0.1%2Fsearch%2Fartists.json%3FartistName%3D" +  encodeURI(encodeURI(artistName)) + "%26callback%3Djson1%27%0A&format=json", function(response){
+	$.getJSON("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%27https%3A%2F%2Fapi.setlist.fm%2Frest%2F0.1%2Fsearch%2Fartists.json%3FartistName%3D" +  encodeURI(encodeURI(artistName)) + "%26callback%3Djson1%27%0A&format=json", function(response){
+		console.log(response);
+		$("#formParent").removeClass('has-error');
+		$('#artist').removeClass('form-control-danger');
+		if (response.query.count == 0) {
+			$('#artist').addClass('form-control-danger');
+			$("#formParent").addClass('has-error');
+			return;
+		}
+		
+		$("#formParent").addClass('has-success');
 		
 		// Parse YQL response for actual setlist.fm JSON response
 		var response = JSON.parse(response.query.results.body);
@@ -27,7 +48,7 @@ search = function() {
 		else {
 			for (var i in response.artists.artist) {
 				artist = response.artists.artist[i]["@name"];
-				if (response.artists.artist[i]["@disambiguation"] != "") {
+				if (response.artists.artist[i]["@disambiguation"] != "" && "@disambiguation" in response.artists.artist[i]) {
 					artist = artist + " (" + response.artists.artist[i]["@disambiguation"] + ")";
 				}
 				selectedID = response.artists.artist[i]["@mbid"];
@@ -39,7 +60,7 @@ search = function() {
  
  // Search for an artist's setlists by mbid and generate embedded player
  function setlistSearch(mbid) { 
-	$.getJSON("http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%27https%3A%2F%2Fapi.setlist.fm%2Frest%2F0.1%2Fartist%2F" + mbid + "%2Fsetlists.json%27%0A&format=json", function(response){
+	$.getJSON("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%27https%3A%2F%2Fapi.setlist.fm%2Frest%2F0.1%2Fartist%2F" + mbid + "%2Fsetlists.json%27%0A&format=json", function(response){
 		
 		var getSetlist = JSON.parse(response.query.results.body);
 		
